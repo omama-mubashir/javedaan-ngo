@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!mainNav.classList.contains('active')) {
                 header.classList.add('nav-hidden');
             }
-        } else {
+        } else if (currentScrollY < lastScrollY) {
             header.classList.remove('nav-hidden');
         }
         
