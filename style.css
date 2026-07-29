@@ -404,6 +404,49 @@ h1, h2, h3, h4, .logo {
 }
 
 /* =========================================
+   Raised So Far Section
+   ========================================= */
+.raised-section {
+    padding: var(--space-lg) 0;
+}
+
+.raised-card {
+    border-top: 1px solid var(--clr-sage);
+    border-bottom: 1px solid var(--clr-sage);
+    padding: var(--space-lg) 0;
+    text-align: left;
+}
+
+.raised-data {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.raised-amount {
+    font-family: var(--font-serif);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    color: var(--clr-forest);
+    line-height: 1.1;
+    font-weight: 400;
+}
+
+.raised-purpose {
+    font-family: var(--font-sans);
+    color: var(--clr-body);
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+}
+
+.raised-updated {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--clr-sage);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* =========================================
    Get Involved Section
    ========================================= */
 .get-involved-section {
@@ -622,5 +665,16 @@ h1, h2, h3, h4, .logo {
     .footer-container {
         grid-template-columns: 1fr;
         gap: 2rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .raised-card {
+        padding: var(--space-md) 0;
+        text-align: center;
+    }
+    
+    .raised-amount {
+        font-size: clamp(36px, 10vw, 64px);
     }
 }

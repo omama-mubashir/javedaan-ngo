@@ -99,4 +99,26 @@ document.addEventListener('DOMContentLoaded', () => {
         // Fallback for older browsers
         revealElements.forEach(el => el.classList.add('active'));
     }
+
+    // Raised So Far Data Fetch
+    fetch('data.json')
+        .then(response => response.json())
+        .then(data => {
+            const amountEl = document.getElementById('raised-amount');
+            const purposeEl = document.getElementById('raised-purpose');
+            const updatedEl = document.getElementById('raised-updated');
+            
+            if (amountEl && data.amount) {
+                // Ensure proper Pakistani Rupee format
+                const formattedAmount = new Intl.NumberFormat('en-PK').format(data.amount);
+                amountEl.textContent = `Rs. ${formattedAmount}`;
+            }
+            if (purposeEl && data.purpose) {
+                purposeEl.textContent = data.purpose;
+            }
+            if (updatedEl && data.updatedAt) {
+                updatedEl.textContent = `Updated ${data.updatedAt}`;
+            }
+        })
+        .catch(err => console.error('Error fetching donation data:', err));
 });
