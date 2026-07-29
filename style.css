@@ -164,7 +164,7 @@ h1, h2, h3, h4, .logo {
 }
 
 .site-header.nav-hidden {
-    transform: translate(-50%, calc(-100% - 2rem));
+    transform: translate(-50%, -150%) !important;
 }
 
 .header-container {
@@ -631,7 +631,7 @@ h1, h2, h3, h4, .logo {
     }
 
     .site-header.nav-hidden {
-        transform: translate(-50%, calc(100% + 2rem));
+        transform: translate(-50%, 150%) !important;
     }
 
     .main-nav {
