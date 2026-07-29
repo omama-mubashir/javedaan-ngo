@@ -441,6 +441,7 @@ h1, h2, h3, h4, .logo {
    ========================================= */
 .story-section {
     padding: var(--space-xl) 0;
+    position: relative;
 }
 
 .story-container {
@@ -490,6 +491,7 @@ h1, h2, h3, h4, .logo {
    ========================================= */
 .raised-section {
     padding: var(--space-lg) 0;
+    position: relative;
 }
 
 .raised-card {
@@ -533,6 +535,7 @@ h1, h2, h3, h4, .logo {
    ========================================= */
 .get-involved-section {
     padding: var(--space-xl) 0;
+    position: relative;
 }
 
 .involved-grid {
