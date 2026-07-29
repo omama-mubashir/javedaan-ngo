@@ -121,4 +121,70 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         })
         .catch(err => console.error('Error fetching donation data:', err));
+
+    // Blob Cursor Animation
+    const blobs = document.querySelectorAll('.blob');
+    if (blobs.length > 0 && typeof gsap !== 'undefined') {
+        const fastDuration = 0.1;
+        const slowDuration = 0.5;
+        const fastEase = 'power3.out';
+        const slowEase = 'power1.out';
+        
+        const handleMove = (e) => {
+            const x = e.clientX || e.touches?.[0]?.clientX;
+            const y = e.clientY || e.touches?.[0]?.clientY;
+            
+            blobs.forEach((el, i) => {
+                const isLead = i === 0;
+                gsap.to(el, {
+                    x: x,
+                    y: y,
+                    duration: isLead ? fastDuration : slowDuration,
+                    ease: isLead ? fastEase : slowEase
+                });
+            });
+        };
+        
+        window.addEventListener('mousemove', handleMove);
+        window.addEventListener('touchmove', handleMove);
+
+        // Hover Effect Logic for "Water Blob / Magnifying Glass"
+        const blobMain = document.querySelector('.blob-main');
+        const innerDots = document.querySelectorAll('.inner-dot');
+        
+        window.addEventListener('mouseover', (e) => {
+            const target = e.target;
+            const isInteractive = target.tagName.match(/^(A|BUTTON|H1|H2|H3|H4|H5|H6|P|SPAN|LI|INPUT|TEXTAREA|LABEL|IMG|STRONG|EM|SVG|USE|PATH|BLOCKQUOTE|CITE|Q|B|I)$/i) || target.closest('a, button');
+            
+            if (isInteractive) {
+                gsap.to(blobs, {
+                    backgroundColor: '#8C9678', // Light sage green
+                    scale: 1.5,
+                    duration: 0.3
+                });
+                gsap.to(blobMain, {
+                    opacity: 0.4, // Transparent to see text
+                    duration: 0.3
+                });
+                gsap.to(innerDots, {
+                    opacity: 0,
+                    duration: 0.3
+                });
+            } else {
+                gsap.to(blobs, {
+                    backgroundColor: '#1F3D2B', // Dark forest green
+                    scale: 1,
+                    duration: 0.3
+                });
+                gsap.to(blobMain, {
+                    opacity: 1,
+                    duration: 0.3
+                });
+                gsap.to(innerDots, {
+                    opacity: 1,
+                    duration: 0.3
+                });
+            }
+        });
+    }
 });

@@ -14,6 +14,22 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Blob Cursor Component -->
+    <div class="blob-container">
+        <svg style="position: absolute; width: 0; height: 0;">
+            <filter id="blob">
+                <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="30" />
+                <feColorMatrix in="blur" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 35 -10" />
+            </filter>
+        </svg>
+
+        <div class="blob-main" style="filter: url(#blob);">
+            <div class="blob"><div class="inner-dot"></div></div>
+            <div class="blob"><div class="inner-dot"></div></div>
+            <div class="blob"><div class="inner-dot"></div></div>
+        </div>
+    </div>
+
     <!-- Sticky Navigation -->
     <header class="site-header">
         <div class="container header-container">
@@ -196,6 +212,7 @@
         </div>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
