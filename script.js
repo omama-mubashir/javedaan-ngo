@@ -49,26 +49,40 @@ document.addEventListener('DOMContentLoaded', () => {
         lastScrollY = currentScrollY;
     });
 
-    // Pulse Line Animation
-    // We want the pulse to draw itself once on load, then settle.
+    // Community Thread (Pulse Line & Nodes)
     const pulsePath = document.querySelector('.pulse-path');
-    
-    if (pulsePath) {
-        // Force a reflow
-        pulsePath.getBoundingClientRect();
+    if (pulsePath && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        const length = pulsePath.getTotalLength();
+        gsap.set(pulsePath, { strokeDasharray: length, strokeDashoffset: length });
         
-        // Animate the stroke dashoffset to 0 over 2 seconds
-        pulsePath.style.transition = 'stroke-dashoffset 2s cubic-bezier(0.4, 0, 0.2, 1)';
-        pulsePath.style.strokeDashoffset = '0';
+        gsap.to(pulsePath, {
+            strokeDashoffset: 0,
+            scrollTrigger: {
+                trigger: '.pulse-container',
+                start: 'top center',
+                end: 'bottom top',
+                scrub: 1
+            }
+        });
+    }
 
-        // After the drawing animation completes, we morph it to a straight line
-        setTimeout(() => {
-            // Replace the path data with a flat straight line
-            // The original path was: d="M0,25 L200,25 L215,5 L230,45 L245,25 L500,25"
-            // The flat line will be: d="M0,25 L200,25 L215,25 L230,25 L245,25 L500,25"
-            pulsePath.style.transition = 'd 0.8s ease-in-out';
-            pulsePath.setAttribute('d', 'M0,25 L200,25 L215,25 L230,25 L245,25 L500,25');
-        }, 2200); // Wait slightly longer than the draw animation
+    // Scroll-drawn thread lines
+    const threadLines = document.querySelectorAll('.thread-line');
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        threadLines.forEach(line => {
+            const length = line.getTotalLength();
+            gsap.set(line, { strokeDasharray: length, strokeDashoffset: length });
+            
+            gsap.to(line, {
+                strokeDashoffset: 0,
+                scrollTrigger: {
+                    trigger: line.closest('.thread-container').parentElement,
+                    start: 'top center',
+                    end: 'bottom center',
+                    scrub: 1
+                }
+            });
+        });
     }
 
     // JazzCash Copy to Clipboard functionality
@@ -141,6 +155,25 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         })
         .catch(err => console.error('Error fetching donation data:', err));
+
+    // State of Care Typographic Transition
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+
+        const socFill = document.querySelector('.soc-fill');
+        if (socFill) {
+            gsap.to(socFill, {
+                scrollTrigger: {
+                    trigger: '.state-of-care-transition',
+                    start: 'top 80%',
+                    end: 'bottom 40%',
+                    scrub: 1, // Smooth scrubbing
+                },
+                clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+                ease: 'none'
+            });
+        }
+    }
 
     // Blob Cursor Animation
     const blobs = document.querySelectorAll('.blob');
