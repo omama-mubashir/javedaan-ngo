@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javedaan | Community Health Initiative</title>
+    <meta name="description" content="Javedaan is a grassroots health collective providing preventive healthcare awareness, free screening camps, and community care.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Sticky Navigation -->
+    <header class="site-header">
+        <div class="container header-container">
+            <a href="#" class="logo">Javedaan</a>
+            
+            <button class="hamburger-menu" aria-label="Toggle navigation" aria-expanded="false">
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+
+            <nav class="main-nav">
+                <ul class="nav-links">
+                    <li><a href="#mission">Mission</a></li>
+                    <li><a href="#programs">Programs</a></li>
+                    <li><a href="#impact">Impact</a></li>
+                    <li><a href="#get-involved">Get Involved</a></li>
+                </ul>
+                <a href="#donate" class="btn btn-outline nav-btn">Donate</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container hero-container">
+                <p class="hero-subline">Community-led preventive care</p>
+                <h1 class="hero-headline">Bringing essential health awareness and early screening to communities that need it most.</h1>
+                
+                <div class="pulse-container">
+                    <svg class="pulse-line" viewBox="0 0 500 50" preserveAspectRatio="none">
+                        <path class="pulse-path" d="M0,25 L200,25 L215,5 L230,45 L245,25 L500,25"></path>
+                    </svg>
+                </div>
+                
+                <div class="hero-actions">
+                    <a href="#donate" class="btn btn-primary">Support the work</a>
+                    <a href="#mission" class="btn btn-text">Read our approach</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trust / Mission Block -->
+        <section id="mission" class="mission-section">
+            <div class="container">
+                <div class="mission-content">
+                    <span class="eyebrow">[PLACEHOLDER] FOUNDER'S NOTE</span>
+                    <blockquote class="mission-quote">
+                        "Real healthcare starts before the hospital. It begins in the community, with understanding, early detection, and neighbors taking care of each other."
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+
+        <hr class="hairline-divider">
+
+        <!-- Programs Section -->
+        <section id="programs" class="programs-section">
+            <div class="container">
+                <h2 class="section-title">Our Approach</h2>
+                <div class="programs-grid">
+                    <div class="program-card">
+                        <span class="program-number">01</span>
+                        <h3 class="program-title">Awareness</h3>
+                        <p class="program-desc">We conduct grassroots sessions to educate communities on hygiene, nutrition, and early symptoms of prevalent diseases.</p>
+                    </div>
+                    <div class="program-card">
+                        <span class="program-number">02</span>
+                        <h3 class="program-title">Screening</h3>
+                        <p class="program-desc">Organizing free local camps for dental health and general checkups, identifying risks before they become emergencies.</p>
+                    </div>
+                    <div class="program-card">
+                        <span class="program-number">03</span>
+                        <h3 class="program-title">Community Care</h3>
+                        <p class="program-desc">Following up with individuals who need further attention and establishing localized support networks for sustained health.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="hairline-divider">
+
+        <!-- Impact Section -->
+        <section id="impact" class="impact-section bg-green">
+            <div class="container">
+                <span class="eyebrow text-cream">Our Reach</span>
+                <p class="impact-statement">
+                    Through community effort, we have organized <span class="impact-number">[PLACEHOLDER X]</span> screening camps and directly supported the health of over <span class="impact-number">[PLACEHOLDER Y]</span> individuals in our neighborhoods.
+                </p>
+            </div>
+        </section>
+
+        <!-- Story Section -->
+        <section class="story-section">
+            <div class="container story-container">
+                <div class="story-image-wrapper">
+                    <!-- PLACEHOLDER IMAGE -->
+                    <div class="image-placeholder">
+                        <span>[PHOTO PLACEHOLDER]</span>
+                    </div>
+                </div>
+                <div class="story-content">
+                    <span class="eyebrow">[PLACEHOLDER] ONE STORY</span>
+                    <h3 class="story-headline">"Catching the issue early changed everything."</h3>
+                    <p class="story-text">
+                        [PLACEHOLDER TEXT] "I attended a local dental camp just to accompany a friend. The screening identified a serious underlying infection I hadn't noticed. Thanks to the immediate guidance and follow-up care from the Javedaan team, I received the right treatment before it worsened."
+                    </p>
+                    <p class="story-author">— [PLACEHOLDER NAME], Community Member</p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="hairline-divider">
+
+        <!-- Get Involved Section -->
+        <section id="get-involved" class="get-involved-section">
+            <div class="container">
+                <h2 class="section-title">Get Involved</h2>
+                
+                <div class="involved-grid">
+                    <div id="donate" class="involved-card donate-card">
+                        <span class="eyebrow">Give</span>
+                        <h3 class="card-title">Support a Camp</h3>
+                        <p class="card-desc">Your contribution directly funds screening equipment, medical supplies, and local awareness materials.</p>
+                        
+                        <div class="jazzcash-info">
+                            <p class="payment-instruction">Send contributions via JazzCash:</p>
+                            <button class="copy-btn" id="copyJazzcash" data-clipboard="03001234567">
+                                <span class="number">[PLACEHOLDER 0300-1234567]</span>
+                                <span class="copy-text">Tap to Copy</span>
+                            </button>
+                            <p class="confirmation-note">Please send your transaction ID to our WhatsApp to receive a confirmation receipt.</p>
+                            <a href="https://wa.me/923001234567" target="_blank" class="btn btn-outline btn-full">WhatsApp Confirmation</a>
+                        </div>
+                    </div>
+                    
+                    <div class="involved-card volunteer-card">
+                        <span class="eyebrow">Volunteer</span>
+                        <h3 class="card-title">Join the Collective</h3>
+                        <p class="card-desc">Are you a medical professional, organizer, or community advocate? We are always looking for hands-on help for our upcoming camps.</p>
+                        <a href="mailto:hello@javedaan.example.com?subject=Volunteering%20with%20Javedaan" class="btn btn-primary btn-full">Email Us</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <span class="logo">Javedaan</span>
+                <p class="footer-desc">A grassroots health collective for preventive care.</p>
+            </div>
+            <div class="footer-links">
+                <a href="#mission">Mission</a>
+                <a href="#programs">Programs</a>
+                <a href="#impact">Impact</a>
+            </div>
+            <div class="footer-contact">
+                <p>Based in [PLACEHOLDER CITY]</p>
+                <a href="mailto:hello@javedaan.example.com">hello@javedaan.example.com</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
