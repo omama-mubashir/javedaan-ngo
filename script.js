@@ -124,15 +124,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Blob Cursor Animation
     const blobs = document.querySelectorAll('.blob');
-    if (blobs.length > 0 && typeof gsap !== 'undefined') {
+    const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+    if (blobs.length > 0 && typeof gsap !== 'undefined' && !isTouchDevice) {
         const fastDuration = 0.1;
         const slowDuration = 0.5;
         const fastEase = 'power3.out';
         const slowEase = 'power1.out';
         
         const handleMove = (e) => {
-            const x = e.clientX || e.touches?.[0]?.clientX;
-            const y = e.clientY || e.touches?.[0]?.clientY;
+            const x = e.clientX;
+            const y = e.clientY;
             
             blobs.forEach((el, i) => {
                 const isLead = i === 0;
@@ -146,7 +148,6 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         
         window.addEventListener('mousemove', handleMove);
-        window.addEventListener('touchmove', handleMove);
 
         // Hover Effect Logic for "Water Blob / Magnifying Glass"
         const blobMain = document.querySelector('.blob-main');
