@@ -235,11 +235,15 @@ h1, h2, h3, h4, .logo {
     font-size: 0.9rem;
     color: var(--clr-sage);
     margin-bottom: 1.5rem;
+    border-left: 2px solid var(--clr-sage);
+    padding-left: 0.75rem;
 }
 
 .hero-headline {
     font-size: clamp(2.5rem, 5vw, 4.5rem);
     margin-bottom: 3rem;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
 }
 
 /* Pulse Animation */
@@ -649,9 +653,13 @@ h1, h2, h3, h4, .logo {
 
     .hero-actions {
         flex-direction: column;
-        align-items: stretch;
-        gap: 1rem;
+        align-items: center;
+        gap: 1.5rem;
         text-align: center;
+    }
+
+    .pulse-container {
+        margin: 4.5rem 0;
     }
 
     .story-container {
