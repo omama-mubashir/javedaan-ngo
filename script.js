@@ -29,6 +29,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Navbar Scroll Hide/Show
+    const header = document.querySelector('.site-header');
+    let lastScrollY = window.scrollY;
+
+    window.addEventListener('scroll', () => {
+        const currentScrollY = window.scrollY;
+        
+        // Hide if scrolling down past 50px, show if scrolling up
+        if (currentScrollY > lastScrollY && currentScrollY > 50) {
+            // Only hide if menu is not currently open
+            if (!mainNav.classList.contains('active')) {
+                header.classList.add('nav-hidden');
+            }
+        } else {
+            header.classList.remove('nav-hidden');
+        }
+        
+        lastScrollY = currentScrollY;
+    });
+
     // Pulse Line Animation
     // We want the pulse to draw itself once on load, then settle.
     const pulsePath = document.querySelector('.pulse-path');
