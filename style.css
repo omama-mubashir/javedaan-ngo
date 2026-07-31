@@ -897,10 +897,11 @@ h1, h2, h3, h4, .logo {
 
     .nav-links {
         flex-direction: column;
-        align-items: flex-start; /* Left justify the options */
-        padding-left: 2.5rem; /* Indent them nicely */
-        gap: 1rem; /* Less line spacing between the options */
-        width: 100%;
+        align-items: flex-start; /* Left justify the text inside the block */
+        gap: 1rem;
+        width: max-content; /* Make block only as wide as its text */
+        align-self: center; /* Center the whole block horizontally */
+        padding-left: 0;
     }
 
     .nav-links a {
