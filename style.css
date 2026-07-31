@@ -513,25 +513,100 @@ h1, h2, h3, h4, .logo {
     text-align: left;
 }
 
-.raised-data {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+.tasbih-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding: 3rem 0;
 }
 
-.raised-amount {
+.tasbih-ring {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+}
+
+.bead {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+
+.bead-filled {
+  background: var(--clr-forest);
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.bead-hollow {
+  background: transparent;
+  border: 1.5px solid var(--clr-sage);
+  opacity: 0.5;
+}
+
+.tasbih-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 70%;
+}
+
+.tasbih-tail {
+  position: relative;
+  margin-top: -10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.tasbih-tail .bead {
+  position: static;
+}
+
+/* Offset tail beads for natural drape */
+.tasbih-tail .bead:nth-child(1) { margin-left: 2px; }
+.tasbih-tail .bead:nth-child(2) { margin-left: 4px; }
+.tasbih-tail .bead:nth-child(3) { margin-left: 2px; }
+
+.tasbih-end-bead {
+  width: 20px;
+  height: 26px;
+  border-radius: 50% 50% 45% 45%;
+  background: var(--clr-forest);
+  margin-top: 4px;
+}
+
+.tasbih-amount {
     font-family: var(--font-serif);
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-size: 1.5rem;
     color: var(--clr-forest);
-    line-height: 1.1;
+    line-height: 1.2;
+    margin-bottom: 0.25rem;
+}
+
+.tasbih-goal {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    color: var(--clr-sage);
     font-weight: 400;
 }
 
-.raised-purpose {
+.tasbih-caption {
     font-family: var(--font-sans);
     color: var(--clr-body);
-    font-size: 1.125rem;
+    font-size: 1rem;
     margin-bottom: 0.5rem;
+}
+
+@media (max-width: 640px) {
+    .tasbih-wrapper {
+        transform: scale(0.75);
+    }
 }
 
 .raised-updated {

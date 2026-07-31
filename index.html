@@ -167,8 +167,6 @@
             </div>
         </section>
 
-        <hr class="hairline-divider">
-
         <!-- Raised So Far Card -->
         <section class="raised-section reveal">
             <div class="container">
@@ -177,18 +175,26 @@
                         <path class="thread-line" d="M50,0 Q90,50 50,100" stroke-linecap="round"></path>
                     </svg>
                 </div>
-                <div class="raised-card">
-                    <dl class="raised-data">
-                        <dt class="eyebrow" id="raised-label">RAISED SO FAR</dt>
-                        <dd class="raised-amount" id="raised-amount" aria-labelledby="raised-label">Rs. --</dd>
-                        <dd class="raised-purpose" id="raised-purpose">...</dd>
-                        <dd class="raised-updated" id="raised-updated">Updated --</dd>
-                    </dl>
+                <div class="tasbih-wrapper">
+                    <div class="tasbih-ring" role="img" aria-label="Fundraising progress: Rs. -- of Rs. -- raised">
+                        <div class="tasbih-content">
+                            <span class="eyebrow" id="raised-label">RAISED SO FAR</span>
+                            <p class="tasbih-amount" id="tasbih-amount-text" aria-hidden="true">
+                                Rs. <span id="raised-amount-val">--</span> <span class="tasbih-goal">of Rs. <span id="raised-goal-val">--</span></span>
+                            </p>
+                            <p class="tasbih-caption" id="raised-purpose">...</p>
+                            <p class="tasbih-updated" id="raised-updated">Updated --</p>
+                        </div>
+                    </div>
+                    <div class="tasbih-tail">
+                        <span class="bead bead-hollow"></span>
+                        <span class="bead bead-hollow"></span>
+                        <span class="bead bead-hollow"></span>
+                        <div class="tasbih-end-bead"></div>
+                    </div>
                 </div>
             </div>
         </section>
-
-        <hr class="hairline-divider">
 
         <!-- Get Involved Section -->
         <section id="get-involved" class="get-involved-section">

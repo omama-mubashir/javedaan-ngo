@@ -140,20 +140,79 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('data.json')
         .then(response => response.json())
         .then(data => {
-            const amountEl = document.getElementById('raised-amount');
+            const amountValEl = document.getElementById('raised-amount-val');
+            const goalValEl = document.getElementById('raised-goal-val');
             const purposeEl = document.getElementById('raised-purpose');
             const updatedEl = document.getElementById('raised-updated');
             
-            if (amountEl && data.amount) {
-                // Ensure proper Pakistani Rupee format
-                const formattedAmount = new Intl.NumberFormat('en-PK').format(data.amount);
-                amountEl.textContent = `Rs. ${formattedAmount}`;
+            let raised = 0;
+            let goal = 120000;
+
+            if (data.amount) {
+                raised = data.amount;
+                if (amountValEl) amountValEl.textContent = new Intl.NumberFormat('en-PK').format(raised);
             }
+            if (data.goal) {
+                goal = data.goal;
+                if (goalValEl) goalValEl.textContent = new Intl.NumberFormat('en-PK').format(goal);
+            }
+
             if (purposeEl && data.purpose) {
                 purposeEl.textContent = data.purpose;
             }
             if (updatedEl && data.updatedAt) {
                 updatedEl.textContent = `Updated ${data.updatedAt}`;
+            }
+
+            // Tasbih Ring Generator
+            const ringContainer = document.querySelector('.tasbih-ring');
+            if (ringContainer) {
+                const totalBeads = 28;
+                const filledCount = Math.round((raised / goal) * totalBeads);
+                
+                // Update aria-label
+                ringContainer.setAttribute('aria-label', `Fundraising progress: Rs. ${raised} of Rs. ${goal} raised`);
+
+                // Remove old beads if running again
+                ringContainer.querySelectorAll('.bead').forEach(b => b.remove());
+
+                // We need radius, but offsetWidth might be 0 if display:none or initially hidden. Default to 160 (320/2) if 0
+                const radius = (ringContainer.offsetWidth || 320) / 2;
+
+                for (let i = 0; i < totalBeads; i++) {
+                    const angle = (i / totalBeads) * 2 * Math.PI - Math.PI / 2; // start at top
+                    // Subtle irregularity for handmade feel (12px to 15px)
+                    const size = 12 + Math.random() * 3;
+                    const halfSize = size / 2;
+                    const x = radius + radius * Math.cos(angle) - halfSize;
+                    const y = radius + radius * Math.sin(angle) - halfSize;
+
+                    const bead = document.createElement('span');
+                    bead.className = i < filledCount ? 'bead bead-filled' : 'bead bead-hollow';
+                    
+                    bead.style.width = `${size}px`;
+                    bead.style.height = `${size}px`;
+                    bead.style.left = `${x}px`;
+                    bead.style.top = `${y}px`;
+                    
+                    ringContainer.appendChild(bead);
+                }
+
+                // GSAP Animation for filled beads
+                if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                    // Only animate ring beads, not tail beads
+                    gsap.from('.tasbih-ring .bead-filled', {
+                        scale: 0,
+                        opacity: 0,
+                        stagger: 0.04,
+                        duration: 0.3,
+                        ease: 'back.out(2)',
+                        scrollTrigger: {
+                            trigger: '.tasbih-wrapper',
+                            start: 'top 80%'
+                        }
+                    });
+                }
             }
         })
         .catch(err => console.error('Error fetching donation data:', err));
