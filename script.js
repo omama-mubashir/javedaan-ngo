@@ -145,7 +145,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const purposeEl = document.getElementById('raised-purpose');
             const updatedEl = document.getElementById('raised-updated');
             
-            const goalValElMobile = document.getElementById('raised-goal-val-mobile');
             const purposeElMobile = document.getElementById('raised-purpose-mobile');
             const updatedElMobile = document.getElementById('raised-updated-mobile');
             
@@ -160,7 +159,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 goal = data.goal;
                 const formattedGoal = new Intl.NumberFormat('en-PK').format(goal);
                 if (goalValEl) goalValEl.textContent = formattedGoal;
-                if (goalValElMobile) goalValElMobile.textContent = formattedGoal;
             }
 
             if (data.purpose) {
@@ -207,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ringContainer.appendChild(bead);
                 }
 
-                // GSAP Animation for filled beads
+                // GSAP Animation for filled beads and progress bar
                 if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
                     // Only animate ring beads, not tail beads
                     gsap.from('.tasbih-ring .bead-filled', {
@@ -221,6 +219,26 @@ document.addEventListener('DOMContentLoaded', () => {
                             start: 'top 80%'
                         }
                     });
+
+                    // Animate the slim progress bar fill
+                    const progressFill = document.querySelector('.tasbih-progress-fill');
+                    if (progressFill) {
+                        const ratio = Math.min(1, raised / goal);
+                        const percentStr = (ratio * 100) + '%';
+                        
+                        gsap.fromTo(progressFill, 
+                            { width: '0%' }, 
+                            { 
+                                width: percentStr, 
+                                duration: 1.5, 
+                                ease: 'power2.out',
+                                scrollTrigger: {
+                                    trigger: '.tasbih-wrapper',
+                                    start: 'top 80%'
+                                }
+                            }
+                        );
+                    }
                 }
             }
         })
