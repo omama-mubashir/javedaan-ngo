@@ -570,7 +570,8 @@ h1, h2, h3, h4, .logo {
 
 .tasbih-tail {
   position: relative;
-  margin-top: -10px;
+  /* The wrapper is already flex-aligned center, but just in case, ensure it's flush */
+  margin-top: 12px; 
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -643,6 +644,12 @@ h1, h2, h3, h4, .logo {
 @media (max-width: 768px) {
     .tasbih-desktop-detail {
         display: none !important;
+    }
+    .tasbih-goal {
+        display: block;
+        white-space: nowrap;
+        margin-top: 2px;
+        font-size: 0.95rem; /* slight reduction if needed to fit */
     }
     .tasbih-mobile-detail {
         display: block;
