@@ -45,7 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
             navTl.to(hamburger, {
                 top: 'calc(100% - 30px)',
                 right: '50%',
-                xPercent: 50,
+                x: '50%', // use x instead of xPercent for smooth interpolation
+                y: '-50%', // maintain the initial translateY to prevent vertical jump
                 duration: 0.6,
                 ease: 'power3.inOut'
             }, 0);
