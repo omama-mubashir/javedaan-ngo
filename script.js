@@ -13,34 +13,72 @@ document.addEventListener('DOMContentLoaded', () => {
         const mm = gsap.matchMedia();
         mm.add("(max-width: 860px)", () => {
             const menuItems = document.querySelectorAll('.nav-links li, .nav-btn');
+            const siteHeader = document.querySelector('.site-header');
+            const logo = document.querySelector('.logo');
+            
             // Initial state for staggering
             gsap.set(menuItems, { y: 20, opacity: 0 });
 
+            // Store initial styles to easily clear them on cleanup
+            const initialHeaderStyles = siteHeader.getAttribute('style') || '';
+            const initialHamburgerStyles = hamburger.getAttribute('style') || '';
+
             navTl = gsap.timeline({ paused: true, reversed: true });
             
-            // 1. Expand the background from bottom-center
-            navTl.to(mainNav, {
-                clipPath: 'circle(150% at 50% 100%)',
-                autoAlpha: 1, // handles visibility: hidden to visible
+            // 1. Morph the pill into the card
+            navTl.to(siteHeader, {
+                height: '75vh',
+                borderRadius: '24px',
+                backgroundColor: '#1F3D2B', // Matches --clr-forest for a dark brand feel
+                backdropFilter: 'blur(0px)', // Remove glass blur when solid
                 duration: 0.6,
                 ease: 'power3.inOut'
-            });
+            }, 0);
+
+            // 2. Fade out logo
+            navTl.to(logo, {
+                opacity: 0,
+                duration: 0.3,
+                ease: 'power2.out'
+            }, 0);
+
+            // 3. Move hamburger menu to bottom center and make it light
+            const hamburgerBars = hamburger.querySelectorAll('.bar');
+            navTl.to(hamburger, {
+                top: 'calc(100% - 30px)',
+                right: '50%',
+                xPercent: 50,
+                duration: 0.6,
+                ease: 'power3.inOut'
+            }, 0);
+            navTl.to(hamburgerBars, {
+                backgroundColor: '#EDE4CF', // Cream 'X' on dark background
+                duration: 0.3,
+                ease: 'power2.out'
+            }, 0);
+
+            // 4. Reveal the nav container
+            navTl.set(mainNav, { autoAlpha: 1 }, 0);
             
-            // 2. Stagger in the navigation links
+            // 5. Stagger in the navigation links
             navTl.to(menuItems, {
                 y: 0,
                 opacity: 1,
+                color: '#EDE4CF', // Cream text on dark background
                 duration: 0.4,
                 stagger: 0.08,
                 ease: 'power2.out'
-            }, "-=0.3");
+            }, 0.3);
 
             return () => {
-                // Cleanup when transitioning back to desktop
                 if (navTl) navTl.kill();
                 navTl = null;
                 gsap.set(menuItems, { clearProps: "all" });
                 gsap.set(mainNav, { clearProps: "all" });
+                siteHeader.setAttribute('style', initialHeaderStyles);
+                hamburger.setAttribute('style', initialHamburgerStyles);
+                gsap.set(hamburgerBars, { clearProps: "all" });
+                gsap.set(logo, { clearProps: "all" });
             };
         });
     }

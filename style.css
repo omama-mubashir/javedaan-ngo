@@ -851,26 +851,46 @@ h1, h2, h3, h4, .logo {
         bottom: 1.5rem;
         padding: 0.75rem 1.5rem;
         width: 92%;
+        overflow: hidden; /* Contains the expanding menu items */
+        /* height is auto by default, GSAP will animate it */
     }
 
     .site-header.nav-hidden {
         transform: translate(-50%, 150%) !important;
     }
 
+    .header-container {
+        /* On mobile, position relative so we can center the hamburger when active */
+        position: relative;
+        width: 100%;
+    }
+
+    .logo {
+        /* Allow GSAP to fade this out */
+        transition: opacity 0.3s ease;
+    }
+
+    .hamburger-menu {
+        display: flex;
+        z-index: 200;
+        /* Position absolute to allow centering when morphed */
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
     .main-nav {
         position: absolute;
-        top: auto;
-        bottom: -1.5rem;
-        left: 50%;
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(237, 228, 207, 0.98);
-        backdrop-filter: blur(10px);
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: calc(100% - 60px); /* Leave space at bottom for the X button */
+        background-color: transparent;
         flex-direction: column;
         justify-content: center;
         gap: 2.5rem;
-        transform: translate(-50%, 0);
-        clip-path: circle(0% at 50% 100%);
+        /* Start hidden inside the pill */
         visibility: hidden;
         z-index: 99;
     }
