@@ -211,7 +211,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Blob Cursor Animation
     const blobs = document.querySelectorAll('.blob');
-    const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+    const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || window.innerWidth <= 860;
+
+    if (isTouchDevice) {
+        const blobContainer = document.querySelector('.blob-container');
+        if (blobContainer) blobContainer.style.display = 'none';
+    }
 
     if (blobs.length > 0 && typeof gsap !== 'undefined' && !isTouchDevice) {
         const fastDuration = 0.1;
