@@ -42,14 +42,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // 3. Move hamburger menu to bottom center
             const hamburgerBars = hamburger.querySelectorAll('.bar');
-            navTl.to(hamburger, {
-                top: 'calc(100% - 30px)',
-                right: '50%',
-                x: '50%', // use x instead of xPercent for smooth interpolation
-                y: '-50%', // maintain the initial translateY to prevent vertical jump
-                duration: 0.6,
-                ease: 'power3.inOut'
-            }, 0);
+            navTl.fromTo(hamburger, 
+                { 
+                    top: '50%', 
+                    right: '1.5rem', 
+                    x: '0%', 
+                    y: '-50%' 
+                },
+                {
+                    top: 'calc(100% - 30px)',
+                    right: '50%',
+                    x: '50%',
+                    y: '-50%',
+                    duration: 0.6,
+                    ease: 'power3.inOut'
+                }, 0);
 
             // 4. Reveal the nav container
             navTl.set(mainNav, { autoAlpha: 1 }, 0);
