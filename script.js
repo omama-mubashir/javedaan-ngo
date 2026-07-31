@@ -6,11 +6,56 @@ document.addEventListener('DOMContentLoaded', () => {
     const mainNav = document.querySelector('.main-nav');
     const navLinks = document.querySelectorAll('.nav-links a, .nav-btn');
 
+    let navTl;
+
+    // Use GSAP matchMedia to only apply the expanding animation on mobile (<= 860px)
+    if (typeof gsap !== 'undefined' && gsap.matchMedia) {
+        const mm = gsap.matchMedia();
+        mm.add("(max-width: 860px)", () => {
+            const menuItems = document.querySelectorAll('.nav-links li, .nav-btn');
+            // Initial state for staggering
+            gsap.set(menuItems, { y: 20, opacity: 0 });
+
+            navTl = gsap.timeline({ paused: true, reversed: true });
+            
+            // 1. Expand the background from bottom-center
+            navTl.to(mainNav, {
+                clipPath: 'circle(150% at 50% 100%)',
+                autoAlpha: 1, // handles visibility: hidden to visible
+                duration: 0.6,
+                ease: 'power3.inOut'
+            });
+            
+            // 2. Stagger in the navigation links
+            navTl.to(menuItems, {
+                y: 0,
+                opacity: 1,
+                duration: 0.4,
+                stagger: 0.08,
+                ease: 'power2.out'
+            }, "-=0.3");
+
+            return () => {
+                // Cleanup when transitioning back to desktop
+                if (navTl) navTl.kill();
+                navTl = null;
+                gsap.set(menuItems, { clearProps: "all" });
+                gsap.set(mainNav, { clearProps: "all" });
+            };
+        });
+    }
+
     const toggleMenu = () => {
         const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
         hamburger.setAttribute('aria-expanded', !isExpanded);
         hamburger.classList.toggle('active');
-        mainNav.classList.toggle('active');
+        
+        // Trigger GSAP timeline if available, otherwise fallback
+        if (navTl) {
+            navTl.reversed() ? navTl.play() : navTl.reverse();
+        } else {
+            mainNav.classList.toggle('active');
+        }
         
         // Prevent body scrolling when menu is open
         if (!isExpanded) {
@@ -25,7 +70,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Close menu when clicking a link
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
-            if (mainNav.classList.contains('active')) {
+            // Check if active class exists (fallback) or if GSAP timeline is played
+            if (mainNav.classList.contains('active') || (navTl && !navTl.reversed())) {
                 toggleMenu();
             }
         });
