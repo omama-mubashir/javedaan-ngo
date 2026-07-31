@@ -25,12 +25,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             navTl = gsap.timeline({ paused: true, reversed: true });
             
-            // 1. Morph the pill into the card
+            // 1. Morph the pill into the card (Keep original glass background)
             navTl.to(siteHeader, {
                 height: '75vh',
                 borderRadius: '24px',
-                backgroundColor: '#1F3D2B', // Matches --clr-forest for a dark brand feel
-                backdropFilter: 'blur(0px)', // Remove glass blur when solid
                 duration: 0.6,
                 ease: 'power3.inOut'
             }, 0);
@@ -42,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ease: 'power2.out'
             }, 0);
 
-            // 3. Move hamburger menu to bottom center and make it light
+            // 3. Move hamburger menu to bottom center
             const hamburgerBars = hamburger.querySelectorAll('.bar');
             navTl.to(hamburger, {
                 top: 'calc(100% - 30px)',
@@ -50,11 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 xPercent: 50,
                 duration: 0.6,
                 ease: 'power3.inOut'
-            }, 0);
-            navTl.to(hamburgerBars, {
-                backgroundColor: '#EDE4CF', // Cream 'X' on dark background
-                duration: 0.3,
-                ease: 'power2.out'
             }, 0);
 
             // 4. Reveal the nav container
@@ -64,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
             navTl.to(menuItems, {
                 y: 0,
                 opacity: 1,
-                color: '#EDE4CF', // Cream text on dark background
                 duration: 0.4,
                 stagger: 0.08,
                 ease: 'power2.out'
