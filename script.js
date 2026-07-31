@@ -211,18 +211,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Blob Cursor Animation
     const blobs = document.querySelectorAll('.blob');
-    const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches || ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
 
-    if (blobs.length > 0 && typeof gsap !== 'undefined' && !isTouchDevice) {
+    if (blobs.length > 0 && typeof gsap !== 'undefined') {
         const fastDuration = 0.1;
         const slowDuration = 0.5;
         const fastEase = 'power3.out';
         const slowEase = 'power1.out';
         
-        const handleMove = (e) => {
-            const x = e.clientX;
-            const y = e.clientY;
-            
+        const updateBlobPosition = (x, y) => {
             blobs.forEach((el, i) => {
                 const isLead = i === 0;
                 gsap.to(el, {
@@ -233,47 +230,127 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
         };
-        
-        window.addEventListener('mousemove', handleMove);
 
-        // Hover Effect Logic for "Water Blob / Magnifying Glass"
-        const blobMain = document.querySelector('.blob-main');
-        const innerDots = document.querySelectorAll('.inner-dot');
-        
-        window.addEventListener('mouseover', (e) => {
-            const target = e.target;
-            const isInteractive = target.tagName.match(/^(A|BUTTON|H1|H2|H3|H4|H5|H6|P|SPAN|LI|INPUT|TEXTAREA|LABEL|IMG|STRONG|EM|SVG|USE|PATH|BLOCKQUOTE|CITE|Q|B|I)$/i) || target.closest('a, button');
+        if (!isTouchDevice) {
+            const handleMove = (e) => {
+                updateBlobPosition(e.clientX, e.clientY);
+            };
             
-            if (isInteractive) {
-                gsap.to(blobs, {
-                    backgroundColor: '#8C9678', // Light sage green
-                    scale: 1.5,
-                    duration: 0.3
+            window.addEventListener('mousemove', handleMove);
+
+            // Hover Effect Logic for "Water Blob / Magnifying Glass"
+            const blobMain = document.querySelector('.blob-main');
+            const innerDots = document.querySelectorAll('.inner-dot');
+            
+            window.addEventListener('mouseover', (e) => {
+                const target = e.target;
+                const isInteractive = target.tagName.match(/^(A|BUTTON|H1|H2|H3|H4|H5|H6|P|SPAN|LI|INPUT|TEXTAREA|LABEL|IMG|STRONG|EM|SVG|USE|PATH|BLOCKQUOTE|CITE|Q|B|I)$/i) || target.closest('a, button');
+                
+                if (isInteractive) {
+                    gsap.to(blobs, {
+                        backgroundColor: '#8C9678', // Light sage green
+                        scale: 1.5,
+                        duration: 0.3
+                    });
+                    gsap.to(blobMain, {
+                        opacity: 0.4, // Transparent to see text
+                        duration: 0.3
+                    });
+                    gsap.to(innerDots, {
+                        opacity: 0,
+                        duration: 0.3
+                    });
+                } else {
+                    gsap.to(blobs, {
+                        backgroundColor: '#1F3D2B', // Dark forest green
+                        scale: 1,
+                        duration: 0.3
+                    });
+                    gsap.to(blobMain, {
+                        opacity: 1,
+                        duration: 0.3
+                    });
+                    gsap.to(innerDots, {
+                        opacity: 1,
+                        duration: 0.3
+                    });
+                }
+            });
+        } else {
+            // Mobile Device Orientation Logic
+            let idleAnimation;
+            const startIdle = () => {
+                const cx = window.innerWidth / 2;
+                const cy = window.innerHeight / 2;
+                updateBlobPosition(cx, cy);
+                
+                idleAnimation = gsap.to(blobs, {
+                    x: () => cx + (Math.random() * 40 - 20),
+                    y: () => cy + (Math.random() * 40 - 20),
+                    duration: 3,
+                    ease: "sine.inOut",
+                    repeat: -1,
+                    yoyo: true,
+                    repeatRefresh: true,
+                    stagger: 0.15
                 });
-                gsap.to(blobMain, {
-                    opacity: 0.4, // Transparent to see text
-                    duration: 0.3
-                });
-                gsap.to(innerDots, {
-                    opacity: 0,
-                    duration: 0.3
-                });
-            } else {
-                gsap.to(blobs, {
-                    backgroundColor: '#1F3D2B', // Dark forest green
-                    scale: 1,
-                    duration: 0.3
-                });
-                gsap.to(blobMain, {
-                    opacity: 1,
-                    duration: 0.3
-                });
-                gsap.to(innerDots, {
-                    opacity: 1,
-                    duration: 0.3
-                });
+            };
+
+            const stopIdle = () => {
+                if (idleAnimation) {
+                    idleAnimation.kill();
+                    idleAnimation = null;
+                }
+            };
+
+            startIdle();
+
+            let ticking = false;
+            const handleTilt = (e) => {
+                // Ignore missing values
+                if (e.gamma === null || e.beta === null) return;
+
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        stopIdle();
+                        
+                        // Limit gamma (left/right) to -45/45, beta (front/back) to 0/90
+                        const gamma = Math.max(-45, Math.min(45, e.gamma || 0));
+                        const beta = Math.max(0, Math.min(90, e.beta || 0));
+                        
+                        const x = gsap.utils.mapRange(-45, 45, 0, window.innerWidth, gamma);
+                        const y = gsap.utils.mapRange(0, 90, 0, window.innerHeight, beta);
+
+                        updateBlobPosition(x, y);
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            };
+
+            if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+                // iOS 13+ devices require explicit permission
+                const permissionBtn = document.getElementById('motionPermissionBtn');
+                if (permissionBtn) {
+                    permissionBtn.style.display = 'block';
+                    permissionBtn.addEventListener('click', () => {
+                        DeviceOrientationEvent.requestPermission()
+                            .then(permissionState => {
+                                if (permissionState === 'granted') {
+                                    permissionBtn.style.display = 'none';
+                                    window.addEventListener('deviceorientation', handleTilt);
+                                } else {
+                                    permissionBtn.style.display = 'none';
+                                }
+                            })
+                            .catch(console.error);
+                    });
+                }
+            } else if (window.DeviceOrientationEvent) {
+                // Android and other browsers
+                window.addEventListener('deviceorientation', handleTilt);
             }
-        });
+        }
     }
 
     // Kinetic Headline Effect
