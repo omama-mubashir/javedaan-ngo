@@ -860,8 +860,8 @@ h1, h2, h3, h4, .logo {
     }
 
     .header-container {
-        /* On mobile, position relative so we can center the hamburger when active */
-        position: relative;
+        /* Allow children to be absolutely positioned relative to .site-header */
+        position: static;
         width: 100%;
     }
 
@@ -873,9 +873,9 @@ h1, h2, h3, h4, .logo {
     .hamburger-menu {
         display: flex;
         z-index: 200;
-        /* Position absolute to allow centering when morphed */
+        /* Position absolute relative to .site-header */
         position: absolute;
-        right: 0;
+        right: 1.5rem; /* Matches .site-header padding */
         top: 50%;
         transform: translateY(-50%);
     }
