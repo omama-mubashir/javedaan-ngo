@@ -805,18 +805,10 @@ h1, h2, h3, h4, .logo {
     z-index: 9999;
 }
 
-/* iOS Motion Permission Button */
-.motion-permission-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 10000;
-    font-family: var(--font-sans);
-    font-size: 0.85rem;
-    padding: 0.5rem 1rem;
-    border-radius: 50px;
-    box-shadow: 0 4px 10px rgba(31, 61, 43, 0.2);
-    display: none; /* hidden by default */
+@media (hover: none) and (pointer: coarse) {
+    .blob-container {
+        display: none !important;
+    }
 }
 
 .blob-main {
