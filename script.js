@@ -145,6 +145,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const purposeEl = document.getElementById('raised-purpose');
             const updatedEl = document.getElementById('raised-updated');
             
+            const goalValElMobile = document.getElementById('raised-goal-val-mobile');
+            const purposeElMobile = document.getElementById('raised-purpose-mobile');
+            const updatedElMobile = document.getElementById('raised-updated-mobile');
+            
             let raised = 0;
             let goal = 120000;
 
@@ -154,14 +158,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             if (data.goal) {
                 goal = data.goal;
-                if (goalValEl) goalValEl.textContent = new Intl.NumberFormat('en-PK').format(goal);
+                const formattedGoal = new Intl.NumberFormat('en-PK').format(goal);
+                if (goalValEl) goalValEl.textContent = formattedGoal;
+                if (goalValElMobile) goalValElMobile.textContent = formattedGoal;
             }
 
-            if (purposeEl && data.purpose) {
-                purposeEl.textContent = data.purpose;
+            if (data.purpose) {
+                if (purposeEl) purposeEl.textContent = data.purpose;
+                if (purposeElMobile) purposeElMobile.textContent = data.purpose;
             }
-            if (updatedEl && data.updatedAt) {
-                updatedEl.textContent = `Updated ${data.updatedAt}`;
+            if (data.updatedAt) {
+                const updatedText = `Updated ${data.updatedAt}`;
+                if (updatedEl) updatedEl.textContent = updatedText;
+                if (updatedElMobile) updatedElMobile.textContent = updatedText;
             }
 
             // Tasbih Ring Generator
