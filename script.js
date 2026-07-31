@@ -392,7 +392,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Blob Cursor Animation
     const blobs = document.querySelectorAll('.blob');
-    const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || window.innerWidth <= 860;
+    const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches || window.innerWidth <= 860;
 
     if (isTouchDevice) {
         const blobContainer = document.querySelector('.blob-container');
