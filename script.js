@@ -241,4 +241,97 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // Kinetic Headline Effect
+    const splitIntoLetters = (selector) => {
+        const el = document.querySelector(selector);
+        if (!el) return;
+        
+        // Process text nodes recursively to preserve existing HTML like <em>
+        const processNodes = (parent) => {
+            const nodes = Array.from(parent.childNodes);
+            nodes.forEach(node => {
+                if (node.nodeType === Node.TEXT_NODE) {
+                    // Only process text nodes that aren't purely empty/whitespace (unless it's a space we want to preserve between words)
+                    // We need to keep single spaces.
+                    if (node.textContent.trim().length > 0 || node.textContent === ' ' || node.textContent.includes(' ')) {
+                        const text = node.textContent;
+                        const fragment = document.createDocumentFragment();
+                        
+                        // Split by whitespace but keep the whitespace tokens
+                        const words = text.split(/(\s+)/);
+                        
+                        words.forEach(word => {
+                            if (word.trim().length === 0) {
+                                // Just append whitespace as text so normal line wrapping applies between words
+                                fragment.appendChild(document.createTextNode(word));
+                            } else {
+                                // Wrap actual words in an inline-block container so they don't break mid-word
+                                const wordSpan = document.createElement('span');
+                                wordSpan.className = 'kinetic-word';
+                                wordSpan.style.display = 'inline-block';
+                                wordSpan.style.whiteSpace = 'nowrap';
+                                
+                                word.split('').forEach((char) => {
+                                    const charSpan = document.createElement('span');
+                                    charSpan.className = 'kinetic-letter';
+                                    charSpan.textContent = char;
+                                    charSpan.style.display = 'inline-block';
+                                    wordSpan.appendChild(charSpan);
+                                });
+                                
+                                fragment.appendChild(wordSpan);
+                            }
+                        });
+                        
+                        parent.replaceChild(fragment, node);
+                    }
+                } else if (node.nodeType === Node.ELEMENT_NODE) {
+                    processNodes(node);
+                }
+            });
+        };
+
+        processNodes(el);
+    };
+
+    if (!isTouchDevice && typeof gsap !== 'undefined') {
+        splitIntoLetters('.hero-headline');
+        
+        const letters = document.querySelectorAll('.kinetic-letter');
+        if (letters.length > 0) {
+            const letterAnimations = Array.from(letters).map((letter) => ({
+                el: letter,
+                yTo: gsap.quickTo(letter, 'y', { duration: 0.4, ease: 'power3' })
+            }));
+
+            const heroSection = document.querySelector('.hero');
+            
+            const handleKineticMove = (e) => {
+                letterAnimations.forEach(({ el, yTo }) => {
+                    const rect = el.getBoundingClientRect();
+                    const centerX = rect.left + rect.width / 2;
+                    const centerY = rect.top + rect.height / 2;
+                    const dist = Math.hypot(e.clientX - centerX, e.clientY - centerY);
+                    const influence = gsap.utils.mapRange(0, 100, -8, 0, Math.min(dist, 100));
+                    yTo(influence);
+                });
+            };
+
+            if ('IntersectionObserver' in window && heroSection) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            window.addEventListener('mousemove', handleKineticMove);
+                        } else {
+                            window.removeEventListener('mousemove', handleKineticMove);
+                        }
+                    });
+                }, { threshold: 0 });
+                observer.observe(heroSection);
+            } else {
+                window.addEventListener('mousemove', handleKineticMove);
+            }
+        }
+    }
 });
