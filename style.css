@@ -646,7 +646,19 @@ h1, h2, h3, h4, .logo {
     }
     .tasbih-mobile-detail {
         display: block;
-        margin-top: 1rem;
+        margin-top: 0.25rem;
+    }
+    .tasbih-mobile-detail .tasbih-caption {
+        margin-bottom: 0;
+    }
+    .tasbih-mobile-detail .tasbih-updated {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.05em;
+        color: var(--clr-sage);
+        opacity: 0.8;
+        margin-top: 4px;
+        text-transform: uppercase;
     }
     .tasbih-progress-bar {
         display: block;
