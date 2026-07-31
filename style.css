@@ -889,7 +889,7 @@ h1, h2, h3, h4, .logo {
         background-color: transparent;
         flex-direction: column;
         justify-content: center;
-        gap: 2.5rem;
+        gap: 3rem; /* More spacing between links and the button */
         /* Start hidden inside the pill */
         visibility: hidden;
         z-index: 99;
@@ -897,13 +897,19 @@ h1, h2, h3, h4, .logo {
 
     .nav-links {
         flex-direction: column;
-        align-items: center;
-        gap: 2rem;
+        align-items: flex-start; /* Left justify the options */
+        padding-left: 2.5rem; /* Indent them nicely */
+        gap: 1rem; /* Less line spacing between the options */
+        width: 100%;
     }
 
     .nav-links a {
-        font-size: 1.5rem;
+        font-size: 1.25rem; /* Smaller font size than before */
         font-family: var(--font-serif);
+    }
+    
+    .main-nav .nav-btn {
+        align-self: center; /* Keep the button centered */
     }
     
     .hamburger-menu.active .bar:nth-child(1) {
