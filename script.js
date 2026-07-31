@@ -173,6 +173,40 @@ document.addEventListener('DOMContentLoaded', () => {
                 ease: 'none'
             });
         }
+        // Color Bloom Transitions
+        const heroSectionElement = document.querySelector('.hero');
+        if (heroSectionElement) {
+            gsap.fromTo('.hero',
+                { '--gray-val': 1 },
+                {
+                    '--gray-val': 0,
+                    ease: 'none',
+                    scrollTrigger: {
+                        trigger: '.hero',
+                        start: 'top top',
+                        end: 'bottom top',
+                        scrub: true
+                    }
+                }
+            );
+        }
+
+        const missionSectionElement = document.querySelector('.mission-section');
+        if (missionSectionElement) {
+            gsap.fromTo('.mission-section',
+                { '--gray-val': 0.8 },
+                {
+                    '--gray-val': 0,
+                    ease: 'none',
+                    scrollTrigger: {
+                        trigger: '.mission-section',
+                        start: 'top bottom',
+                        end: 'top center',
+                        scrub: true
+                    }
+                }
+            );
+        }
     }
 
     // Blob Cursor Animation

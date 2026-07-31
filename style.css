@@ -238,6 +238,9 @@ h1, h2, h3, h4, .logo {
 .hero {
     padding: var(--space-xl) 0 var(--space-lg);
     padding-top: calc(var(--space-xl) + 5rem);
+    will-change: filter;
+    --gray-val: 1;
+    filter: grayscale(var(--gray-val));
 }
 
 .hero-container {
@@ -295,6 +298,9 @@ h1, h2, h3, h4, .logo {
    ========================================= */
 .mission-section {
     padding: var(--space-lg) 0;
+    will-change: filter;
+    --gray-val: 0.8;
+    filter: grayscale(var(--gray-val));
 }
 
 .mission-content {
