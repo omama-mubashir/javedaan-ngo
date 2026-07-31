@@ -51,21 +51,30 @@ document.addEventListener('DOMContentLoaded', () => {
         lastScrollY = currentScrollY;
     });
 
-    // Community Thread (Pulse Line & Nodes)
+    // Unified Hero Entrance Animation (All Devices)
     const pulsePath = document.querySelector('.pulse-path');
-    if (!isMobile && pulsePath && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-        const length = pulsePath.getTotalLength();
-        gsap.set(pulsePath, { strokeDasharray: length, strokeDashoffset: length });
+    const heroHeadline = document.querySelector('.hero-headline');
+    
+    if (typeof gsap !== 'undefined') {
+        const heroTl = gsap.timeline({ defaults: { duration: 1.2, ease: 'power2.out' } });
         
-        gsap.to(pulsePath, {
-            strokeDashoffset: 0,
-            scrollTrigger: {
-                trigger: '.pulse-container',
-                start: 'top center',
-                end: 'bottom top',
-                scrub: 1
-            }
-        });
+        // Initial setup
+        if (heroHeadline) {
+            gsap.set(heroHeadline, { y: 30, opacity: 0 });
+        }
+        
+        if (pulsePath) {
+            const length = pulsePath.getTotalLength();
+            gsap.set(pulsePath, { strokeDasharray: length, strokeDashoffset: length });
+        }
+        
+        // Animate in on load
+        if (heroHeadline) {
+            heroTl.to(heroHeadline, { y: 0, opacity: 1 }, 0);
+        }
+        if (pulsePath) {
+            heroTl.to(pulsePath, { strokeDashoffset: 0 }, 0.4); // Start slightly after headline
+        }
     }
 
     // Scroll-drawn thread lines
@@ -462,35 +471,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Mobile-only Hero Reveal
-    function initMobileHeroReveal() {
-        const mobilePulsePath = document.querySelector('.pulse-path');
-        if (!mobilePulsePath) return;
-
-        const pathLength = mobilePulsePath.getTotalLength();
-        
-        gsap.set(mobilePulsePath, {
-            strokeDasharray: pathLength,
-            strokeDashoffset: pathLength
-        });
-
-        gsap.set('.hero-headline', { y: 30, opacity: 0 });
-
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: '.hero',
-                start: 'top top',
-                end: 'bottom top',
-                scrub: true
-            }
-        });
-
-        tl.to('.hero-headline', { y: 0, opacity: 1, ease: 'none' }, 0)
-          .to(mobilePulsePath, { strokeDashoffset: 0, ease: 'none' }, 0)
-          .fromTo('.hero', { '--gray-val': 1 }, { '--gray-val': 0, ease: 'none' }, 0);
-    }
-
-    if (isMobile && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-        initMobileHeroReveal();
-    }
 });
