@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const isMobile = window.matchMedia('(max-width: 768px) and (pointer: coarse)').matches;
+
     // Hamburger Menu Toggle
     const hamburger = document.querySelector('.hamburger-menu');
     const mainNav = document.querySelector('.main-nav');
@@ -51,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Community Thread (Pulse Line & Nodes)
     const pulsePath = document.querySelector('.pulse-path');
-    if (pulsePath && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    if (!isMobile && pulsePath && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         const length = pulsePath.getTotalLength();
         gsap.set(pulsePath, { strokeDasharray: length, strokeDashoffset: length });
         
@@ -175,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         // Color Bloom Transitions
         const heroSectionElement = document.querySelector('.hero');
-        if (heroSectionElement) {
+        if (!isMobile && heroSectionElement) {
             gsap.fromTo('.hero',
                 { '--gray-val': 1 },
                 {
@@ -372,5 +374,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.addEventListener('mousemove', handleKineticMove);
             }
         }
+    }
+
+    // Mobile-only Hero Reveal
+    function initMobileHeroReveal() {
+        const mobilePulsePath = document.querySelector('.pulse-path');
+        if (!mobilePulsePath) return;
+
+        const pathLength = mobilePulsePath.getTotalLength();
+        
+        gsap.set(mobilePulsePath, {
+            strokeDasharray: pathLength,
+            strokeDashoffset: pathLength
+        });
+
+        gsap.set('.hero-headline', { y: 30, opacity: 0 });
+
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: '.hero',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: true
+            }
+        });
+
+        tl.to('.hero-headline', { y: 0, opacity: 1, ease: 'none' }, 0)
+          .to(mobilePulsePath, { strokeDashoffset: 0, ease: 'none' }, 0)
+          .fromTo('.hero', { '--gray-val': 1 }, { '--gray-val': 0, ease: 'none' }, 0);
+    }
+
+    if (isMobile && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        initMobileHeroReveal();
     }
 });
