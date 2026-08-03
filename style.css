@@ -730,6 +730,25 @@ h1, h2, h3, h4, .logo {
     letter-spacing: 0.05em;
 }
 
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo-image {
+    height: 64px;
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.logo:hover .logo-image {
+    opacity: 0.9;
+    transform: scale(1.05);
+}
+
+
 /* =========================================
    Get Involved Section
    ========================================= */
