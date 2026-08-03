@@ -43,25 +43,29 @@ document.addEventListener('DOMContentLoaded', () => {
             // 3. Move hamburger menu to bottom center
             const hamburgerBars = hamburger.querySelectorAll('.bar');
             
-            // Calculate pixel offsets for smooth glide (avoids percentage jumping when parent height changes)
+            // Calculate absolute pixel values to prevent percentage-based swooping
             const headerWidth = siteHeader.offsetWidth;
             const initialHeight = siteHeader.offsetHeight;
             const targetHeight = window.innerHeight * 0.75;
             
-            // Delta X: move from right edge to center
-            const deltaX = (headerWidth / 2) - (headerWidth - 24 - (hamburger.offsetWidth / 2));
+            const initialTop = initialHeight / 2;
+            const targetTop = targetHeight - 30;
             
-            // Delta Y: move from initial vertical center to 30px from bottom of expanded menu
-            const deltaY = targetHeight - 30 - (initialHeight / 2);
+            const initialRight = 24; // 1.5rem
+            const targetRight = (headerWidth / 2) - (hamburger.offsetWidth / 2);
 
             navTl.fromTo(hamburger, 
                 { 
+                    top: initialTop,
+                    right: initialRight,
                     x: 0, 
-                    y: 0 
+                    yPercent: -50 // Preserve CSS vertical centering
                 },
                 {
-                    x: deltaX,
-                    y: deltaY,
+                    top: targetTop,
+                    right: targetRight,
+                    x: 0,
+                    yPercent: -50,
                     duration: 0.6,
                     ease: 'power3.inOut'
                 }, 0);
