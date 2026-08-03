@@ -33,12 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ease: 'power3.inOut'
             }, 0);
 
-            // 2. Fade out logo
-            navTl.to(logo, {
-                opacity: 0,
-                duration: 0.3,
-                ease: 'power2.out'
-            }, 0);
+            // Removed logo fade-out so it stays at the top of the expanded menu
 
             // 3. Move hamburger menu to bottom center
             const hamburgerBars = hamburger.querySelectorAll('.bar');
