@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found — Javedaan</title>
+    <meta name="description" content="The page you're looking for might have moved or the link may be outdated.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .error-section {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 6rem; /* Account for navbar */
+        }
+        
+        .error-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            max-width: 800px;
+        }
+
+        .error-text {
+            font-family: var(--font-sans);
+            font-size: 1.15rem;
+            color: var(--clr-forest);
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .error-pulse {
+            width: 100%;
+            max-width: 400px;
+            margin: 2rem auto;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <!-- Blob Cursor Component -->
+    <div class="blob-container">
+        <svg style="position: absolute; width: 0; height: 0;">
+            <filter id="blob">
+                <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="30" />
+                <feColorMatrix in="blur" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 35 -10" />
+            </filter>
+        </svg>
+
+        <div class="blob-main" style="filter: url(#blob);">
+            <div class="blob"><div class="inner-dot"></div></div>
+            <div class="blob"><div class="inner-dot"></div></div>
+            <div class="blob"><div class="inner-dot"></div></div>
+        </div>
+    </div>
+
+    <!-- Sticky Navigation -->
+    <header class="site-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo" aria-label="Javedaan Home">
+                <img src="logo-transparent.png" alt="Javedaan" class="logo-image">
+            </a>
+            
+            <button class="hamburger-menu" aria-label="Toggle navigation" aria-expanded="false">
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+
+            <nav class="main-nav">
+                <ul class="nav-links">
+                    <li><a href="index.html#mission">Mission</a></li>
+                    <li><a href="index.html#programs">Programs</a></li>
+                    <li><a href="index.html#impact">Impact</a></li>
+                    <li><a href="index.html#get-involved">Get Involved</a></li>
+                </ul>
+                <a href="index.html#donate" class="btn btn-primary nav-btn">Donate</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="error-section">
+            <div class="container error-container">
+                <span class="eyebrow">ERROR 404</span>
+                <h1 class="hero-headline">This page took a wrong turn.</h1>
+                
+                <p class="error-text">
+                    The page you're looking for might have been moved or the link may be outdated. Let's get you back to the community.
+                </p>
+                
+                <div class="pulse-container error-pulse">
+                    <svg class="pulse-line" viewBox="0 0 500 50" preserveAspectRatio="none">
+                        <!-- A flatlining pulse to represent the 404 concept -->
+                        <path class="pulse-path" d="M0,25 L100,25 L115,5 L130,45 L145,25 L500,25" stroke-dasharray="6,4"></path>
+                    </svg>
+                </div>
+                
+                <div class="hero-actions" style="justify-content: center;">
+                    <a href="index.html" class="btn btn-primary">Return to Homepage</a>
+                    <a href="index.html#programs" class="btn btn-text">See our Programs</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <span class="logo">Javedaan</span>
+                <p class="footer-desc">A grassroots health collective for preventive care.</p>
+            </div>
+            <div class="footer-links">
+                <a href="index.html#mission">Mission</a>
+                <a href="index.html#programs">Programs</a>
+                <a href="index.html#impact">Impact</a>
+            </div>
+            <div class="footer-contact">
+                <p>Based in [PLACEHOLDER CITY]</p>
+                <a href="mailto:hello@javedaan.example.com">hello@javedaan.example.com</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
