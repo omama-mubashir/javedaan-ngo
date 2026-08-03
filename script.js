@@ -247,11 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.amount) {
                 raised = data.amount;
                 if (amountValEl) {
-                    if (isMobile) {
-                        amountValEl.textContent = new Intl.NumberFormat('en-PK').format(raised);
-                    } else {
-                        amountValEl.textContent = '0';
-                    }
+                    amountValEl.textContent = '0';
                 }
             }
             if (data.goal) {
@@ -334,39 +330,39 @@ document.addEventListener('DOMContentLoaded', () => {
                             duration: 0.5,
                             ease: 'power2.out'
                         });
-
-                        tl.eventCallback('onComplete', () => {
-                            gsap.to('.tasbih-section', {
-                                scale: 1.015,
-                                duration: 4,
-                                ease: 'sine.inOut',
-                                yoyo: true,
-                                repeat: -1
-                            });
-                        });
-
-                        gsap.to('.tasbih-ring', {
-                            rotate: 20,
-                            ease: 'none',
-                            scrollTrigger: {
-                                trigger: '.tasbih-section',
-                                start: 'top bottom',
-                                end: 'bottom top',
-                                scrub: true
-                            }
-                        });
-
-                        gsap.to('.tasbih-content', {
-                            rotate: -20,
-                            ease: 'none',
-                            scrollTrigger: {
-                                trigger: '.tasbih-section',
-                                start: 'top bottom',
-                                end: 'bottom top',
-                                scrub: true
-                            }
-                        });
                     }
+
+                    tl.eventCallback('onComplete', () => {
+                        gsap.to('.tasbih-section', {
+                            scale: 1.015,
+                            duration: 4,
+                            ease: 'sine.inOut',
+                            yoyo: true,
+                            repeat: -1
+                        });
+                    });
+
+                    gsap.to('.tasbih-ring', {
+                        rotate: 20,
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: '.tasbih-section',
+                            start: 'top bottom',
+                            end: 'bottom top',
+                            scrub: true
+                        }
+                    });
+
+                    gsap.to('.tasbih-content', {
+                        rotate: -20,
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: '.tasbih-section',
+                            start: 'top bottom',
+                            end: 'bottom top',
+                            scrub: true
+                        }
+                    });
 
                     function animateCountUp(el, endValue, duration) {
                         const obj = { val: 0 };
@@ -389,7 +385,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         ease: 'back.out(2)'
                     });
 
-                    if (!isMobile && amountValEl) {
+                    if (amountValEl) {
                         tl.add(() => animateCountUp(amountValEl, raised, 0.6), '<');
                     }
 
