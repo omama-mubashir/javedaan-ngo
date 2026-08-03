@@ -526,6 +526,14 @@ h1, h2, h3, h4, .logo {
     margin-bottom: 0;
 }
 
+.tasbih-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  flex-wrap: wrap;
+}
+
 .tasbih-wrapper {
   display: flex;
   flex-direction: column;
@@ -534,11 +542,55 @@ h1, h2, h3, h4, .logo {
   padding: 2rem 0 3rem;
 }
 
+.tasbih-ayat-block {
+  max-width: 340px;
+  text-align: center;
+}
+
+.tasbih-ayat-arabic {
+  font-family: 'Aref Ruqaa', serif;
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1.8;
+  color: var(--clr-forest);
+  opacity: 1;
+}
+
+.tasbih-ayat-translation {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--clr-body);
+  margin-top: 0.75rem;
+  line-height: 1.6;
+}
+
+.tasbih-ayat-ref {
+  display: block;
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 0.75rem;
+  color: var(--clr-sage);
+  margin-top: 0.5rem;
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 768px) {
+  .tasbih-section {
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+  .tasbih-ayat-arabic {
+    font-size: 1.6rem;
+  }
+}
+
 .tasbih-ring {
   position: relative;
   width: 320px;
   height: 320px;
   border-radius: 50%;
+  z-index: 1;
 }
 
 .bead {
@@ -576,6 +628,7 @@ h1, h2, h3, h4, .logo {
   flex-direction: column;
   align-items: center;
   gap: 6px;
+  z-index: 1;
 }
 
 .tasbih-tail .bead {
@@ -605,9 +658,12 @@ h1, h2, h3, h4, .logo {
 
 .tasbih-goal {
     font-family: var(--font-sans);
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: var(--clr-sage);
     font-weight: 400;
+    display: block;
+    white-space: nowrap;
+    margin-top: 2px;
 }
 
 .tasbih-caption {
@@ -618,10 +674,24 @@ h1, h2, h3, h4, .logo {
 }
 
 .tasbih-mobile-detail {
-    display: none;
+    display: block;
     text-align: center;
-    margin-top: 2rem;
+    margin-top: 0.25rem;
     max-width: 85%;
+}
+
+.tasbih-mobile-detail .tasbih-caption {
+    margin-bottom: 0;
+}
+
+.tasbih-mobile-detail .tasbih-updated {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    color: var(--clr-sage);
+    opacity: 0.8;
+    margin-top: 4px;
+    text-transform: uppercase;
 }
 
 .tasbih-progress-bar {
@@ -631,7 +701,7 @@ h1, h2, h3, h4, .logo {
     border-radius: 4px;
     margin: 0.75rem auto 0;
     overflow: hidden;
-    display: none;
+    display: block;
 }
 
 .tasbih-progress-fill {
@@ -641,39 +711,7 @@ h1, h2, h3, h4, .logo {
     border-radius: 4px;
 }
 
-@media (max-width: 768px) {
-    .tasbih-desktop-detail {
-        display: none !important;
-    }
-    .tasbih-goal {
-        display: block;
-        white-space: nowrap;
-        margin-top: 2px;
-        font-size: 0.95rem; /* slight reduction if needed to fit */
-    }
-    .tasbih-mobile-detail {
-        display: block;
-        margin-top: 0.25rem;
-    }
-    .tasbih-mobile-detail .tasbih-caption {
-        margin-bottom: 0;
-    }
-    .tasbih-mobile-detail .tasbih-updated {
-        font-family: var(--font-mono);
-        font-size: 0.7rem;
-        letter-spacing: 0.05em;
-        color: var(--clr-sage);
-        opacity: 0.8;
-        margin-top: 4px;
-        text-transform: uppercase;
-    }
-    .tasbih-progress-bar {
-        display: block;
-    }
-    .tasbih-wrapper {
-        padding-bottom: 0.5rem;
-    }
-}
+
 
 .raised-updated {
     font-family: var(--font-mono);

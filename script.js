@@ -300,18 +300,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // GSAP Animation for filled beads and progress bar
                 if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-                    // Only animate ring beads, not tail beads
-                    gsap.from('.tasbih-ring .bead-filled', {
-                        scale: 0,
-                        opacity: 0,
-                        stagger: 0.04,
-                        duration: 0.3,
-                        ease: 'back.out(2)',
+                    gsap.set('.tasbih-ayat-block', { opacity: 0, y: 20 });
+
+                    const tl = gsap.timeline({
                         scrollTrigger: {
                             trigger: '.tasbih-wrapper',
                             start: 'top 80%'
                         }
                     });
+
+                    // Only animate ring beads, not tail beads
+                    tl.from('.tasbih-ring .bead-filled', {
+                        scale: 0,
+                        opacity: 0,
+                        stagger: 0.04,
+                        duration: 0.3,
+                        ease: 'back.out(2)'
+                    })
+                    .to('.tasbih-ayat-block', {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.6,
+                        ease: 'power2.out'
+                    }, '<');
 
                     // Animate the slim progress bar fill
                     const progressFill = document.querySelector('.tasbih-progress-fill');
