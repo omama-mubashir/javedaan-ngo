@@ -933,7 +933,10 @@ h1, h2, h3, h4, .logo {
     }
 
     .logo {
-        /* Allow GSAP to fade this out */
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
         transition: opacity 0.3s ease;
     }
 
