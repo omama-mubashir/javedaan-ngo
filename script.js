@@ -301,10 +301,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 // GSAP Animation for filled beads and progress bar
                 if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
                     gsap.set('.tasbih-ayat-block', { opacity: 0, y: 20 });
+                    gsap.set('.tasbih-ayat-arabic', { clipPath: 'inset(0 0 0 100%)' });
+                    
+                    const dividerPath = document.querySelector('.tasbih-divider-path');
+                    if (dividerPath && !isMobile) {
+                        const dividerLength = dividerPath.getTotalLength() || 200;
+                        gsap.set(dividerPath, { strokeDasharray: dividerLength, strokeDashoffset: dividerLength });
+                    }
 
                     const tl = gsap.timeline({
                         scrollTrigger: {
-                            trigger: '.tasbih-wrapper',
+                            trigger: '.tasbih-section',
                             start: 'top 80%'
                         }
                     });
@@ -322,7 +329,20 @@ document.addEventListener('DOMContentLoaded', () => {
                         y: 0,
                         duration: 0.6,
                         ease: 'power2.out'
+                    }, '<')
+                    .to('.tasbih-ayat-arabic', {
+                        clipPath: 'inset(0 0 0 0%)',
+                        duration: 1,
+                        ease: 'power2.inOut'
                     }, '<');
+
+                    if (dividerPath && !isMobile) {
+                        tl.to(dividerPath, {
+                            strokeDashoffset: 0,
+                            duration: 0.6,
+                            ease: 'power2.inOut'
+                        });
+                    }
 
                     // Animate the slim progress bar fill
                     const progressFill = document.querySelector('.tasbih-progress-fill');

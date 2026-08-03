@@ -583,6 +583,15 @@ h1, h2, h3, h4, .logo {
   .tasbih-ayat-arabic {
     font-size: 1.6rem;
   }
+  .tasbih-divider {
+    display: none;
+  }
+}
+
+.tasbih-divider {
+  width: 2px;
+  height: 200px;
+  align-self: center;
 }
 
 .tasbih-ring {
