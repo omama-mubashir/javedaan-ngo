@@ -246,7 +246,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (data.amount) {
                 raised = data.amount;
-                if (amountValEl) amountValEl.textContent = new Intl.NumberFormat('en-PK').format(raised);
+                if (amountValEl) {
+                    if (isMobile) {
+                        amountValEl.textContent = new Intl.NumberFormat('en-PK').format(raised);
+                    } else {
+                        amountValEl.textContent = '0';
+                    }
+                }
             }
             if (data.goal) {
                 goal = data.goal;
@@ -300,6 +306,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // GSAP Animation for filled beads and progress bar
                 if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                    if (!isMobile) {
+                        gsap.set('.tasbih-section', { y: 24, scale: 0.98, opacity: 0.9 });
+                    }
+
                     gsap.set('.tasbih-ayat-block', { opacity: 0, y: 20 });
                     gsap.set('.tasbih-ayat-arabic', { clipPath: 'inset(0 0 0 100%)' });
                     
@@ -316,6 +326,60 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     });
 
+                    if (!isMobile) {
+                        tl.to('.tasbih-section', {
+                            y: 0,
+                            scale: 1,
+                            opacity: 1,
+                            duration: 0.5,
+                            ease: 'power2.out'
+                        });
+
+                        tl.eventCallback('onComplete', () => {
+                            gsap.to('.tasbih-section', {
+                                scale: 1.015,
+                                duration: 4,
+                                ease: 'sine.inOut',
+                                yoyo: true,
+                                repeat: -1
+                            });
+                        });
+
+                        gsap.to('.tasbih-ring', {
+                            rotate: 20,
+                            ease: 'none',
+                            scrollTrigger: {
+                                trigger: '.tasbih-section',
+                                start: 'top bottom',
+                                end: 'bottom top',
+                                scrub: true
+                            }
+                        });
+
+                        gsap.to('.tasbih-content', {
+                            rotate: -20,
+                            ease: 'none',
+                            scrollTrigger: {
+                                trigger: '.tasbih-section',
+                                start: 'top bottom',
+                                end: 'bottom top',
+                                scrub: true
+                            }
+                        });
+                    }
+
+                    function animateCountUp(el, endValue, duration) {
+                        const obj = { val: 0 };
+                        gsap.to(obj, {
+                            val: endValue,
+                            duration,
+                            ease: 'power1.out',
+                            onUpdate: () => {
+                                el.textContent = Math.round(obj.val).toLocaleString('en-PK');
+                            }
+                        });
+                    }
+
                     // Only animate ring beads, not tail beads
                     tl.from('.tasbih-ring .bead-filled', {
                         scale: 0,
@@ -323,8 +387,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         stagger: 0.04,
                         duration: 0.3,
                         ease: 'back.out(2)'
-                    })
-                    .to('.tasbih-ayat-block', {
+                    });
+
+                    if (!isMobile && amountValEl) {
+                        tl.add(() => animateCountUp(amountValEl, raised, 0.6), '<');
+                    }
+
+                    tl.to('.tasbih-ayat-block', {
                         opacity: 1,
                         y: 0,
                         duration: 0.6,
